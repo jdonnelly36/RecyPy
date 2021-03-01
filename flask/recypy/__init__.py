@@ -1,32 +1,33 @@
 import os
 
 from flask import Flask
+from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+
+## Config
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.sqlite"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+bcrypt = Bcrypt(app)
+db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
-def create_app(test_config=None):
-    # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev', # Change to random string when deploying
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
+#import blueprints
+from recypy.home.views import home_blueprint
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+#register blueprints
+app.register_blueprint(home_blueprint)
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
 
-    # a simple page that says hello
-    @app.route('/')
-    def index():
-        return 'Index page'
+from .models import User
 
-    return app
+login_manager.login_view = "users.login"
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter(User.id == int(user_id)).first()
+
