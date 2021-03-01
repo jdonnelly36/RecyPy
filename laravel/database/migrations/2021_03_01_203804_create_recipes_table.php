@@ -16,9 +16,9 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date('created_at');
             $table->integer('type_id');
             $table->integer('creator_id');
+            $table->timestamps();
         });
     }
 

@@ -17,10 +17,10 @@ class Recipe extends Model {
     ];
 
     public function creator() {
-        return $this->hasOne('App\User', 'id', 'creator_id');
+        return $this->hasOne('App\Models\User', 'id', 'creator_id');
     }
 
     public function type() {
-        return $this->hasOne('App\RecipeType', 'id','type_id');
+        return $this->hasOne('App\Models\RecipeType', 'id','type_id');
     }
 }

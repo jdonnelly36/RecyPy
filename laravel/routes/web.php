@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function() {
         return view('home');
     });
+
+    Route::get('/test/listUsers', [TestController::class, 'getUsers']);
+    Route::get('/test/listRecipes', [TestController::class, 'getRecipes']);
+    Route::get('/test/listFavorites', [TestController::class, 'getFavorites']);
+    Route::get('/test/listTypes', [TestController::class, 'getTypes']);
 });

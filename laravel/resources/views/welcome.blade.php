@@ -2,8 +2,8 @@
 @include('header')
 <style>
     .centered.header {
-        margin-left: auto;
-        margin-right: auto;
+        margin: 0 auto;
+        text-align: center;
     }
 </style>
 
@@ -21,12 +21,74 @@
     function openRecipeAdd() {
         $('#sample-modal').modal('show')
     }
+
+    function listUsers() {
+        $.ajax({
+            type: 'get',
+            url: '{{url('/test/listUsers')}}',
+            success: function(data) {
+                console.log(data)
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    function listRecipes() {
+        $.ajax({
+            type: 'get',
+            url: '{{url('/test/listRecipes')}}',
+            success: function(data) {
+                console.log(data)
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    function listFavorites() {
+        $.ajax({
+            type: 'get',
+            url: '{{url('/test/listFavorites')}}',
+            success: function(data) {
+                console.log('Favorite Recipes for User 1')
+                console.log(data)
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    }
+
+    function listTypes() {
+        $.ajax({
+            type: 'get',
+            url: '{{url('/test/listTypes')}}',
+            success: function(data) {
+                console.log(data)
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    }
 </script>
 
-<div class="ui bottom attatched segment">
-    <div class="ui float center">
+<div class="ui bottom attatched segment" style="text-align: center">
+    <div class="centered header">
         <h2>Sample Home Page</h2>
         <button class="ui blue button" onclick="openRecipeAdd()">Add Recipe!</button>
+    </div>
+    <div id="testing-div" style="margin: 10px;">
+        <button class="ui button" onclick="listUsers()">List Users</button>
+        <button class="ui button" onclick="listRecipes()">List Recipes</button>
+{{--        <button class="ui button" onclick="listFavorites()">Show Favorites for User 1</button>--}}
+        <button class="ui button" onclick="listTypes()">Show Recipe Types</button>
+        <p id="show-info">
+
+        </p>
     </div>
 </div>
 
