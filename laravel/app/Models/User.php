@@ -48,4 +48,14 @@ class User extends Authenticatable
     public function favorites() {
         return $this->belongsToMany('App\Models\Recipe', 'user_favorites', 'user_id', 'recipe_id');
     }
+
+    // returns "one way friendships" i.e following
+    public function following() {
+        return $this->belongsToMany('App\Models\User', 'friends_pivot', 'user_id', 'friend_id')->wherePivot('mutual', 0);
+    }
+
+    // returns mutual friendhips
+    public function friends() {
+        return $this->belongsToMany('App\Models\User', 'friends_pivot', 'user_id', 'friend_id')->wherePivot('mutual', 1);
+    }
 }

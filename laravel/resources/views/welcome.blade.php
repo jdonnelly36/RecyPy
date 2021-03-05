@@ -102,8 +102,19 @@
                 <input type="text" name="recipe_name" id="recipe-name">
             </div>
             <div class="field">
-                <label>Creator Name</label>
-                <input type="text" name="creator_name" id="creator-name">
+                <label>Recipe tags</label>
+                <div class="ui fluid search multiple dropdown">
+                    <input type="hidden" name="recipe_tags">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Recipe Types</div>
+                    <div class="menu">
+                        <?php
+                            $types = get_recipe_type_dropdown();
+                            foreach ($types as $t)
+                                echo '<div class="item" data-value="' . $t['value'] . '">' . $t['name'] . '</div>';
+                        ?>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="actions">

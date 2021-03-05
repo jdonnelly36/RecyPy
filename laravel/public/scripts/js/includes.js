@@ -5,5 +5,7 @@ $(document).ready(function() {
         $('.ui.modal').modal('hide')
     })
 
+    $('.ui.dropdown').dropdown()
+
     console.log('js includes loaded')
 })
