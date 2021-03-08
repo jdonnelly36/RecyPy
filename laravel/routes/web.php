@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
         return view('welcome');
     });
     Route::get('/home', function() {
-        return view('home');
+        return view('welcome');
     });
 
     Route::get('/test/listUsers', [TestController::class, 'getUsers']);
