@@ -4,6 +4,7 @@ A Recipe Sharing Web Application
 ## Table of Contents
 * [General info](#general-info)
 * [Technologies](#technologies)
+* [Features](#features)
 * [Setup](#setup)
 
 ## General Info
