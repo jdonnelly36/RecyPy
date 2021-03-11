@@ -12,7 +12,7 @@
     }
 
     .ingredient.row {
-        margin: 5px;
+        padding: 1px !important;
     }
 </style>
 
@@ -98,8 +98,27 @@
     function addIngredient() {
         $('#ingredients-container').append(ingredientDiv.clone().attr('id', 'ingredient' + ingredientCount))
         $('#ingredients-container :last-child').show()
-        $('#ingredients-container .ui.dropdown').dropdown()
+        $('#ingredients-container .ui.dropdown').dropdown({forceSelection: false})
+        $('#ingredients-container button').eq(ingredientCount).attr('onclick', 'removeIngredient(' + ingredientCount + ')')
         ingredientCount++
+
+        // focus in and out
+        setTimeout(function() {
+            $('#ingredients-container input').eq(3 + 4 * (ingredientCount - 1)).focus()
+            $('#ingredients-container input').eq(4 * (ingredientCount - 1)).focus()
+        }, 100)
+    }
+
+    function removeIngredient(i) {
+        // removes ingredient div at i
+        $('#ingredient' + i).remove()
+
+        // decrements all following ingredient div ids and resets the minus buttons call
+        for (i = i + 1; i <= ingredientCount; i++) {
+            $('#ingredient' + i + ' button').attr('onclick', 'removeIngredient(' + (i - 1) + ')')
+            $('#ingredient' + i).attr('id', 'ingredient' + (i - 1))
+        }
+        ingredientCount--
     }
 </script>
 
@@ -144,13 +163,14 @@
                 </div>
             </div>
         </div>
-        <h1>Ingredients</h1>
-        <div id="ingredients-container" class="ui grid" style="margin-left: 5px;">
-            <div class="row">
-                <button type="" class="ui small green circular icon button" onclick="addIngredient()" style="height: 40px; width: 40px;"><i class="plus icon"></i></button>
-            </div>
+        <div class="fields">
+            <h1 style="margin-right: 10px;">Ingredients</h1>
+            <button type="" class="ui small green circular icon button" onclick="addIngredient()" style="height: 40px; width: 40px;"><i class="plus icon"></i></button>
         </div>
-        <div class="actions">
+        <div id="ingredients-container" class="ui grid" style="margin-left: 5px;">
+
+        </div>
+        <div class="actions" style="margin-top: 10px; padding-top: 10px;">
             <button class="ui blue button" id="sample-submit" type="submit">Submit</button>
             <button class="ui red button cancel">Cancel</button>
         </div>
@@ -180,4 +200,5 @@
             </div>
         </div>
     </div>
+    <button type="" class="ui circular red icon button" style="height: 38px; width: 38px; margin-top: 19px;"><i class="minus icon"></i></button>
 </div>
