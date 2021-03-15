@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFriendsPivotTable extends Migration
+class Likes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateFriendsPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('friends_pivot', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('friend_id');
-            $table->boolean('mutual');
-            $table->timestamps();
+            $table->integer('recipe_id');
+            $table->integer('score');
         });
     }
 
@@ -29,6 +28,6 @@ class CreateFriendsPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('friends_pivot');
+        Schema::dropIfExists('likes');
     }
 }

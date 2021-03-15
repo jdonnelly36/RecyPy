@@ -16,8 +16,13 @@ class User extends Authenticatable
      *
      * @var array
      */
+
+    protected $table = 'users';
+
+    public $primaryKey = 'id';
+
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
     ];
@@ -32,30 +37,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     public function recipes() {
-        return $this->hasMany('App\Models\Recipe', 'creator_id', 'id');
-    }
-
-    public function favorites() {
-        return $this->belongsToMany('App\Models\Recipe', 'user_favorites', 'user_id', 'recipe_id');
-    }
-
-    // returns "one way friendships" i.e following
-    public function following() {
-        return $this->belongsToMany('App\Models\User', 'friends_pivot', 'user_id', 'friend_id')->wherePivot('mutual', 0);
-    }
-
-    // returns mutual friendhips
-    public function friends() {
-        return $this->belongsToMany('App\Models\User', 'friends_pivot', 'user_id', 'friend_id')->wherePivot('mutual', 1);
+        return $this->hasMany('App\Models\Recipe');
     }
 }

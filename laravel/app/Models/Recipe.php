@@ -8,19 +8,31 @@ use Illuminate\Database\Eloquent\Model;
 class Recipe extends Model {
     use HasFactory;
 
+    protected $table = 'users';
+
+    public $primaryKey = 'id';
+
     protected $fillable = [
-        'id',
         'name',
-        'creator_id',
+        'user_id',
         'created_at',
-        'type_id',
+        'active_time', // in minutes
+        'total_time'// in minutes
     ];
 
-    public function creator() {
-        return $this->hasOne('App\Models\User', 'id', 'creator_id');
+    public function steps() {
+        return $this->hasMany('App\Models\RecipeStep')
     }
 
-    public function type() {
-        return $this->hasOne('App\Models\RecipeType', 'id','type_id');
+    public function ingredients() {
+        return $this->hasMany('App\Models\Ingredient')
+    }
+
+    public function author() {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Models\Comment')
     }
 }

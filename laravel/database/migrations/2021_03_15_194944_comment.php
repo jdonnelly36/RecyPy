@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRecipeTypeTable extends Migration
+class Comment extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateRecipeTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('recipe_type', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->timestamps();
+            $table->integer('recipe_id');
+            $table->integer('user_id');
+            $table->string('comment');
         });
     }
 
@@ -27,6 +28,6 @@ class CreateRecipeTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recipe_type');
+        Schema::dropIfExists('comments');
     }
 }
