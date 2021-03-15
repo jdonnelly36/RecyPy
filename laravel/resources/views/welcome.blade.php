@@ -122,7 +122,7 @@
     }
 </script>
 
-<div class="ui bottom attatched segment" style="text-align: center">
+<div class="ui segment" style="text-align: center">
     <div class="centered header">
         <h2>Sample Home Page</h2>
         <button class="ui blue button" onclick="openRecipeAdd()">Add Recipe!</button>
