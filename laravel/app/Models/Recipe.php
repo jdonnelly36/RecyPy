@@ -21,11 +21,11 @@ class Recipe extends Model {
     ];
 
     public function steps() {
-        return $this->hasMany('App\Models\RecipeStep')
+        return $this->hasMany('App\Models\RecipeStep');
     }
 
     public function ingredients() {
-        return $this->hasMany('App\Models\Ingredient')
+        return $this->hasMany('App\Models\Ingredient');
     }
 
     public function author() {
@@ -33,6 +33,6 @@ class Recipe extends Model {
     }
 
     public function comments() {
-        return $this->hasMany('App\Models\Comment')
+        return $this->hasMany('App\Models\Comment');
     }
 }

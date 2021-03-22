@@ -23,22 +23,24 @@
     $(document).ready(function () {
         console.log('loaded')
 
-        $('#sample-form').on('submit', function (e) {
+        $('#recipe-form').on('submit', function (e) {
             e.preventDefault()
-
-            console.log(e.target)
 
             if (e.target.attr('type') != 'submit')
                 return
 
             console.log('submitted')
+
+            // this is a messy way to do it but idc rn
+            var name = $('#recipe-name').val()
+            
         })
 
         ingredientDiv = $('#ingredient-base');
     })
 
     function openRecipeAdd() {
-        $('#sample-modal').modal('show')
+        $('#recipe-modal').modal('show')
     }
 
     function listUsers() {
@@ -127,7 +129,7 @@
         <h2>Sample Home Page</h2>
         <button class="ui blue button" onclick="openRecipeAdd()">Add Recipe!</button>
     </div>
-    <div id="testing-div" style="margin: 10px;">
+    <div id="testing-div" style="margin: 10px;">recip
         <button class="ui button" onclick="listUsers()">List Users</button>
         <button class="ui button" onclick="listRecipes()">List Recipes</button>
 {{--        <button class="ui button" onclick="listFavorites()">Show Favorites for User 1</button>--}}
@@ -139,9 +141,9 @@
 </div>
 
 {{--modals--}}
-<div class="ui modal small" id="sample-modal">
+<div class="ui modal small" id="recipe-modal">
     <div class="header">Add Recipe</div>
-    <form class="ui form" id="sample-form" style="margin: 10px;" autocomplete="off">
+    <form class="ui form" id="recipe-form" style="margin: 10px;" autocomplete="off">
         <div class="fields" style="width: 95%">
             <div class="required field">
                 <label>Recipe Name</label>
@@ -155,9 +157,9 @@
                     <div class="default text">Recipe Types</div>
                     <div class="menu">
                         <?php
-                            $types = get_recipe_type_dropdown();
-                            foreach ($types as $t)
-                                echo "<div class='item' data-value='" . $t['value'] . "'>" . $t['name'] . "</div>";
+//                            $types = get_recipe_type_dropdown();
+//                            foreach ($types as $t)
+//                                echo "<div class='item' data-value='" . $t['value'] . "'>" . $t['name'] . "</div>";
                         ?>
                     </div>
                 </div>
