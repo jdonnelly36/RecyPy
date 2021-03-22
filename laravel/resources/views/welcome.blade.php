@@ -18,7 +18,8 @@
 
 <script>
 
-    var ingredientDiv;
+    var ingredientDiv, stepDiv;
+    var recipe;
 
     $(document).ready(function () {
         console.log('loaded')
@@ -26,17 +27,35 @@
         $('#recipe-form').on('submit', function (e) {
             e.preventDefault()
 
-            if (e.target.attr('type') != 'submit')
-                return
+            // if (e.target.attr('type') != 'submit')
+            //     return
 
             console.log('submitted')
 
             // this is a messy way to do it but idc rn
             var name = $('#recipe-name').val()
-            
+            var ingredients = []
+            var container;
+            for (var i = 0; i < ingredientCount; i++) {
+                container = $('#ingredient' + i)
+                ingredients.push({name: container.find('input').eq(0).val(), amount: container.find('input').eq(1).val(),
+                    unit: container.find('.dropdown').eq(0).dropdown('get value')})
+            }
+
+            // store as start of recipe
+            recipe = {name: name, ingredients: ingredients}
+
+            // open next modal
+            $('#recipe-modal').modal('hide')
+            $('#recipe-steps-modal').modal('show')
+        })
+
+        $('#recipe-steps-form').on('submit', function (e) {
+            e.preventDefault()
         })
 
         ingredientDiv = $('#ingredient-base');
+        stepDiv = $('#step-base');
     })
 
     function openRecipeAdd() {
@@ -105,7 +124,7 @@
         ingredientCount++
 
         // focus in and out
-        setTimeout(function() {
+        setTimeout(function () {
             $('#ingredients-container input').eq(3 + 4 * (ingredientCount - 1)).focus()
             $('#ingredients-container input').eq(4 * (ingredientCount - 1)).focus()
         }, 100)
@@ -121,6 +140,35 @@
             $('#ingredient' + i).attr('id', 'ingredient' + (i - 1))
         }
         ingredientCount--
+    }
+
+    var stepCount = 0;
+
+    function addStep() {
+        $('#step-container').append(stepDiv.clone().attr('id', 'step' + stepCount))
+        $('#step-container :last-child').show()
+        $('#step' + stepCount).find('input').eq(0).val(stepCount + 1)
+        $('#step-container button').eq(stepCount).attr('onclick', 'removeStep(' + stepCount + ')')
+        stepCount++
+
+        // focus in and out
+        setTimeout(function () {
+            $('#step-container input').eq(3 + 4 * (stepCount - 1)).focus()
+            $('#step-container input').eq(4 * (stepCount - 1)).focus()
+        }, 100)
+    }
+
+    function removeStep(i) {
+        // removes ingredient div at i
+        $('#step' + i).remove()
+
+        // decrements all following ingredient div ids and resets the minus buttons call
+        for (i = i + 1; i <= stepCount; i++) {
+            $('#step' + i + ' button').attr('onclick', 'removeStep(' + (i - 1) + ')')
+            $('#step' + i + ' input').eq(0).val(i)
+            $('#step' + i).attr('id', 'step' + (i - 1))
+        }
+        stepCount--
     }
 </script>
 
@@ -166,6 +214,12 @@
             </div>
         </div>
         <div class="fields">
+            <div class="field" style="width: 100%">
+                <label>Description</label>
+                <textarea class="ui textarea" id="desc"></textarea>
+            </div>
+        </div>
+        <div class="fields">
             <h1 style="margin-right: 10px;">Ingredients</h1>
             <button type="" class="ui small green circular icon button" onclick="addIngredient()" style="height: 40px; width: 40px;"><i class="plus icon"></i></button>
         </div>
@@ -174,6 +228,23 @@
         </div>
         <div class="actions" style="margin-top: 10px; padding-top: 10px;">
             <button class="ui blue button" id="sample-submit" type="submit">Submit</button>
+            <button class="ui red button cancel">Cancel</button>
+        </div>
+    </form>
+</div>
+
+<div class="ui modal small" id="recipe-steps-modal">
+    <div class="header">Add Recipe (Cont.)</div>
+    <form class="ui form" style="margin: 10px;" id="recipe-steps-form" autocomplete="off">
+        <div class="fields">
+            <h1 style="margin-right: 10px;">Steps</h1>
+            <button type="" class="ui small green circular icon button" onclick="addStep()" style="height: 40px; width: 40px;"><i class="plus icon"></i></button>
+        </div>
+        <div id="step-container" class="ui grid" style="margin-left: 5px;">
+
+        </div>
+        <div class="actions" style="margin-top: 10px; padding-top: 10px;">
+            <button class="ui blue button" type="submit">Submit</button>
             <button class="ui red button cancel">Cancel</button>
         </div>
     </form>
@@ -201,6 +272,19 @@
                 <div class="item" data-value="tbls">Tbls</div>
             </div>
         </div>
+    </div>
+    <button type="" class="ui circular red icon button" style="height: 38px; width: 38px; margin-top: 19px;"><i class="minus icon"></i></button>
+</div>
+
+{{--This is the base field used for adding Steps. It is hidden and duplicated into the modal when a user clicks add step--}}
+<div class="step row" style="display: none" id="step-base">
+    <div class="field">
+        <label>Step #</label>
+        <input type="text" readonly>
+    </div>
+    <div class="required field" style="margin: 3px;">
+        <label>Description</label>
+        <input type="text">
     </div>
     <button type="" class="ui circular red icon button" style="height: 38px; width: 38px; margin-top: 19px;"><i class="minus icon"></i></button>
 </div>
