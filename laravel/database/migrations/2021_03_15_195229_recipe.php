@@ -16,10 +16,11 @@ class Recipe extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('description');
             $table->integer('user_id');
-            $table->dateTime('created_at');
-            $table->integer('active_time'); // in minutes
-            $table->integer('total_time'); // in minutes
+            $table->integer('active_time')->nullable(); // in minutes
+            $table->integer('total_time')->nullable(); // in minutes
+            $table->timestamps();
         });
     }
 

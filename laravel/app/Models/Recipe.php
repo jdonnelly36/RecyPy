@@ -8,13 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Recipe extends Model {
     use HasFactory;
 
-    protected $table = 'users';
-
     public $primaryKey = 'id';
 
     protected $fillable = [
         'name',
         'user_id',
+        'description',
         'created_at',
         'active_time', // in minutes
         'total_time'// in minutes

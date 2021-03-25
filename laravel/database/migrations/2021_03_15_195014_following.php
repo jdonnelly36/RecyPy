@@ -17,6 +17,7 @@ class Following extends Migration
             $table->id();
             $table->integer('following_id');
             $table->integer('followed_id');
+            $table->timestamps();
         });
     }
 

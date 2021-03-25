@@ -18,6 +18,7 @@ class RecipeStep extends Migration
             $table->integer('recipe_id');
             $table->integer('step_number');
             $table->string('instructions');
+            $table->timestamps();
         });
     }
 

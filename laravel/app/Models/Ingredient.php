@@ -15,6 +15,7 @@ class Ingredient extends Model {
     protected $fillable = [
         'recipe_id',
         'name',
+        'unit',
         'quantity',
         'notes'
     ];

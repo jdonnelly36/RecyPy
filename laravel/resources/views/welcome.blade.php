@@ -15,15 +15,12 @@
         padding: 1px !important;
     }
 </style>
-
 <script>
 
     var ingredientDiv, stepDiv;
     var recipe;
 
     $(document).ready(function () {
-        console.log('loaded')
-
         $('#recipe-form').on('submit', function (e) {
             e.preventDefault()
 
@@ -43,7 +40,7 @@
             }
 
             // store as start of recipe
-            recipe = {name: name, ingredients: ingredients}
+            recipe = {name: name, ingredients: ingredients, desc: $('#desc').val()}
 
             // open next modal
             $('#recipe-modal').modal('hide')
@@ -52,6 +49,29 @@
 
         $('#recipe-steps-form').on('submit', function (e) {
             e.preventDefault()
+
+            var steps = []
+            var container;
+            for (var i = 0; i < ingredientCount; i++) {
+                container = $('#step' + i)
+                steps.push({number: i, description: container.find('input').eq(1).val()})
+            }
+
+            recipe['steps'] = steps;
+
+            $.ajax({
+                type: 'post',
+                url: '{{route('addRecipe')}}',
+                data: recipe,
+                success: function (data) {
+                    console.log(data)
+                    console.log('Recipe added successfully')
+                    $('#recipe-steps-modal').modal('hide')
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            })
         })
 
         ingredientDiv = $('#ingredient-base');
@@ -238,13 +258,13 @@
     <form class="ui form" style="margin: 10px;" id="recipe-steps-form" autocomplete="off">
         <div class="fields">
             <h1 style="margin-right: 10px;">Steps</h1>
-            <button type="" class="ui small green circular icon button" onclick="addStep()" style="height: 40px; width: 40px;"><i class="plus icon"></i></button>
+            <button type="button" class="ui small green circular icon button" onclick="addStep()" style="height: 40px; width: 40px;"><i class="plus icon"></i></button>
         </div>
         <div id="step-container" class="ui grid" style="margin-left: 5px;">
 
         </div>
         <div class="actions" style="margin-top: 10px; padding-top: 10px;">
-            <button class="ui blue button" type="submit">Submit</button>
+            <button class="ui blue button submit" type="submit" id="steps-submit">Submit</button>
             <button class="ui red button cancel">Cancel</button>
         </div>
     </form>
@@ -286,5 +306,5 @@
         <label>Description</label>
         <input type="text">
     </div>
-    <button type="" class="ui circular red icon button" style="height: 38px; width: 38px; margin-top: 19px;"><i class="minus icon"></i></button>
+    <button type="button" class="ui circular red icon button" style="height: 38px; width: 38px; margin-top: 19px;"><i class="minus icon"></i></button>
 </div>

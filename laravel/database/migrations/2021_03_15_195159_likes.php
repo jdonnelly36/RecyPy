@@ -18,6 +18,7 @@ class Likes extends Migration
             $table->integer('user_id');
             $table->integer('recipe_id');
             $table->integer('score');
+            $table->timestamps();
         });
     }
 

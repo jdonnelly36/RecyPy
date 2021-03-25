@@ -18,6 +18,7 @@ class Comment extends Migration
             $table->integer('recipe_id');
             $table->integer('user_id');
             $table->string('comment');
+            $table->timestamps();
         });
     }
 
