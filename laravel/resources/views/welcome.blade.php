@@ -14,6 +14,11 @@
     .ingredient.row {
         padding: 1px !important;
     }
+
+    .recipe.view {
+        border: 3px lightblue solid;
+        background-color: lightgray;
+    }
 </style>
 <script>
 
@@ -21,6 +26,48 @@
     var recipe;
 
     $(document).ready(function () {
+        // set on change event for recipe dropdown
+        $('#recipe-select').dropdown('setting', 'onChange', function (val, text, choice) {
+            // populate display card after getting recipe info
+            // console.log('val ' + val)
+            $.ajax({
+                type: 'post',
+                url: '{{route('getRecipe')}}',
+                data: {id: val},
+                success: function (data) {
+                    // console.log('bleh')
+                    data = JSON.parse(data)
+                    console.log(data)
+
+                    // populate divs
+                    $('#recipe-title').html('Recipe: ' + data['name'])
+
+                    // build ingredients as string
+                    var ingredients = '';
+                    // console.log(data['ingredients'])
+                    data['ingredients'].forEach(function (val, ind, arr) {
+                        ingredients = ingredients + arr[ind]['name'] + '        ' + arr[ind]['quantity'] + ' ' + arr[ind]['unit']
+                        if (ind != arr.length - 1)
+                            ingredients = ingredients + '<br>'
+                    })
+                    $('#ingredients-display').html(ingredients)
+
+                    // build steps string
+                    var steps = '';
+                    // console.log(data['steps'])
+                    data['steps'].forEach(function (val, ind, arr) {
+                        steps = steps + arr[ind]['step_number'] + ': ' + arr[ind]['instructions']
+                        if (ind != arr.length - 1)
+                            steps = steps + '<br>'
+                    })
+                    $('#steps-display').html(steps)
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            })
+        })
+
         $('#recipe-form').on('submit', function (e) {
             e.preventDefault()
 
@@ -197,14 +244,33 @@
         <h2>Sample Home Page</h2>
         <button class="ui blue button" onclick="openRecipeAdd()">Add Recipe!</button>
     </div>
-    <div id="testing-div" style="margin: 10px;">recip
-        <button class="ui button" onclick="listUsers()">List Users</button>
-        <button class="ui button" onclick="listRecipes()">List Recipes</button>
-{{--        <button class="ui button" onclick="listFavorites()">Show Favorites for User 1</button>--}}
-        <button class="ui button" onclick="listTypes()">Show Recipe Types</button>
-        <p id="show-info">
+    <div id="testing-div" style="margin: 10px;">
+        <label for="recipe-select">Select Recipe</label>
+        <div class="ui search selection dropdown" id="recipe-select">
+            <input type="hidden" name="recipe-id">
+            <i class="dropdown icon"></i>
+            <div class="default text">Recipe Types</div>
+            <div class="menu">
+                <?php
+                    // get all recipes in dropdown form
+                    $recipes = get_all_recipes_dropdown();
+                    foreach ($recipes as $r)
+                        echo "<div class='item' data-value='" . $r['value'] . "'>" . $r['name'] . "</div>";
+                ?>
+            </div>
+        </div>
+    </div>
+{{--    start of recipe display block--}}
+    <div class="recipe view" id="recipe-display">
+        <h1 id="recipe-title"></h1>
+        <h2>Ingredients</h2>
+        <div class="ingredients view" id="ingredients-display">
 
-        </p>
+        </div>
+        <h2>Steps</h2>
+        <div class="steps view" id="steps-display">
+
+        </div>
     </div>
 </div>
 

@@ -62,4 +62,10 @@ class HomeController extends Controller
 
         return 1;
     }
+
+    public function getRecipe() {
+        $recipe = Recipe::where('id', request('id'))->with('ingredients', 'steps', 'author', 'comments')->first()->toJson();
+
+        return $recipe;
+    }
 }

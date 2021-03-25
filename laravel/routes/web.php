@@ -26,4 +26,5 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/addRecipe', [HomeController::class, 'addRecipe'])->name('addRecipe');
+    Route::post('/getRecipe', [HomeController::class, 'getRecipe'])->name('getRecipe');
 });

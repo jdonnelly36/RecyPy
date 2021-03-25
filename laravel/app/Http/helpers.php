@@ -20,3 +20,14 @@ if (!function_exists('get_recipe_type_dropdown')) {
         return $arr;
     }
 }
+
+if (!function_exists('get_all_recipes_dropdown')) {
+    // gets all recipes with just name and ids as array
+    function get_all_recipes_dropdown() {
+        $recipes = \App\Models\Recipe::all();
+        $arr = [];
+        foreach ($recipes as $r)
+            array_push($arr, ['name' => $r->name, 'value' => $r->id]);
+        return $arr;
+    }
+}
