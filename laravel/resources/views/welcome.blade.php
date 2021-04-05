@@ -70,7 +70,7 @@
                     data['tags'].forEach(function (val, ind, arr) {
                         tags = tags + arr[ind]['name']
                         if (ind != arr.length - 1)
-                            steps = steps + ', '
+                            tags = tags + ', '
                     })
                     $('#tags-display').html(tags)
 
