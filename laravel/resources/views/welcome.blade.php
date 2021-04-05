@@ -42,6 +42,7 @@
                     // populate divs
                     $('#recipe-title').html(data['name'])
                     $('#author-name').html(data['author']['name'])
+                    $('#recipe-description').html(data['description'])
 
                     // build ingredients as string
                     var ingredients = '';
@@ -276,7 +277,7 @@
         </div>
     </div>
 {{--    start of recipe display block--}}
-    <div class="ui card" id="recipe-display" style="display: none">
+    <div class="ui raised card" id="recipe-display" style="display: none">
         <div class="content">
             <div class="header" id="recipe-title"></div>
             <div class="meta" id="author-name"></div>
@@ -298,6 +299,10 @@
             <p id="tags-display">
 
             </p>
+        </div>
+        <div class="extra">
+            Rating:
+            <div class="ui star rating" data-rating="4"></div>
         </div>
     </div>
 </div>
