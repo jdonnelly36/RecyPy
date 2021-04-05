@@ -40,7 +40,8 @@
                     console.log(data)
 
                     // populate divs
-                    $('#recipe-title').html('Recipe: ' + data['name'])
+                    $('#recipe-title').html(data['name'])
+                    $('#author-name').html(data['author']['name'])
 
                     // build ingredients as string
                     var ingredients = '';
@@ -61,6 +62,18 @@
                             steps = steps + '<br>'
                     })
                     $('#steps-display').html(steps)
+
+                    // build tags string
+                    var tags = '';
+                    // console.log(data['steps'])
+                    data['tags'].forEach(function (val, ind, arr) {
+                        tags = tags + arr[ind]['name']
+                        if (ind != arr.length - 1)
+                            steps = steps + ', '
+                    })
+                    $('#tags-display').html(tags)
+
+                    $('#recipe-display').show()
                 },
                 error: function (data) {
                     console.log(data)
@@ -263,15 +276,28 @@
         </div>
     </div>
 {{--    start of recipe display block--}}
-    <div class="recipe view" id="recipe-display">
-        <h1 id="recipe-title"></h1>
-        <h2>Ingredients</h2>
-        <div class="ingredients view" id="ingredients-display">
+    <div class="ui card" id="recipe-display" style="display: none">
+        <div class="content">
+            <div class="header" id="recipe-title"></div>
+            <div class="meta" id="author-name"></div>
+            <div class="description">
+                <p id="recipe-description">
 
+                </p>
+                <h3 style="margin: 0px;">Ingredients</h3>
+                <p id="ingredients-display">
+
+                </p>
+                <h3 style="margin: 0px;">Steps</h3>
+                <p id="steps-display">
+
+                </p>
+            </div>
         </div>
-        <h2>Steps</h2>
-        <div class="steps view" id="steps-display">
+        <div class="extra content">
+            <p id="tags-display">
 
+            </p>
         </div>
     </div>
 </div>

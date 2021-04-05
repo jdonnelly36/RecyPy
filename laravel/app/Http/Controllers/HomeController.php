@@ -67,7 +67,7 @@ class HomeController extends Controller
     }
 
     public function getRecipe() {
-        $recipe = Recipe::where('id', request('id'))->with('ingredients', 'steps', 'author', 'comments')->first()->toJson();
+        $recipe = Recipe::where('id', request('id'))->with('ingredients', 'steps', 'author', 'comments', 'tags')->first()->toJson();
 
         return $recipe;
     }

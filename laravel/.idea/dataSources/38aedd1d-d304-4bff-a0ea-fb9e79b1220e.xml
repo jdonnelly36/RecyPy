@@ -1138,17 +1138,21 @@ SELECT|sys.sys_config
       <Position>7</Position>
       <DataType>timestamp|0s</DataType>
     </column>
-    <index id="317" parent="243" name="users_email_unique">
+    <column id="317" parent="243" name="name">
+      <Position>8</Position>
+      <DataType>char(255)|0s</DataType>
+    </column>
+    <index id="318" parent="243" name="users_email_unique">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="318" parent="243" name="PRIMARY">
+    <key id="319" parent="243" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="319" parent="243" name="users_email_unique">
+    <key id="320" parent="243" name="users_email_unique">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>users_email_unique</UnderlyingIndexName>
     </key>
