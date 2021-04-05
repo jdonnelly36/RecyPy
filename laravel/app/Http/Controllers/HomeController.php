@@ -37,7 +37,10 @@ class HomeController extends Controller
         $recipe->user_id = Auth::id();
         $recipe->active_time = 0;
         $recipe->total_time = 0;
+//        var_dump(request('tags'));
         $recipe->save();
+        foreach (explode(',', request('tags')) as $t)
+            $recipe->tags()->attach(intval($t));
 
         // there are better ways to do this but this is easy and allows quick changes
         $steps = request('steps');

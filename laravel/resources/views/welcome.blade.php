@@ -87,7 +87,9 @@
             }
 
             // store as start of recipe
-            recipe = {name: name, ingredients: ingredients, desc: $('#desc').val()}
+            recipe = {name: name, ingredients: ingredients, desc: $('#desc').val(), tags: $('#recipe-tag-dropdown').dropdown('get value')}
+
+            console.log(recipe)
 
             // open next modal
             $('#recipe-modal').modal('hide')
@@ -285,15 +287,15 @@
             </div>
             <div class="field">
                 <label>Recipe tags</label>
-                <div class="ui search multiple selection dropdown">
+                <div class="ui search multiple selection dropdown" id="recipe-tag-dropdown">
                     <input type="hidden" name="recipe_tags">
                     <i class="dropdown icon"></i>
-                    <div class="default text">Recipe Types</div>
+                    <div class="default text">Recipe Tags</div>
                     <div class="menu">
                         <?php
-//                            $types = get_recipe_type_dropdown();
-//                            foreach ($types as $t)
-//                                echo "<div class='item' data-value='" . $t['value'] . "'>" . $t['name'] . "</div>";
+                            $tags = get_recipe_tag_dropdown();
+                            foreach ($tags as $t)
+                                echo "<div class='item' data-value='" . $t['value'] . "'>" . $t['name'] . "</div>";
                         ?>
                     </div>
                 </div>
