@@ -10,10 +10,10 @@ if (! function_exists('example')) {
     }
 }
 
-if (!function_exists('get_recipe_type_dropdown')) {
+if (!function_exists('get_recipe_tag_dropdown')) {
     // returns an array which can be easily used in a dropdown
-    function get_recipe_type_dropdown() {
-        $types = \App\Models\RecipeType::all();
+    function get_recipe_tag_dropdown() {
+        $types = \App\Models\RecipeTag::all();
         $arr = [];
         foreach ($types as $t)
             array_push($arr, ['name' => $t->name, 'value' => $t->id]);

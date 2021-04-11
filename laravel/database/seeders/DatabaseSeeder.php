@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Recipe;
-use App\Models\RecipeType;
+use App\Models\RecipeTag;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -39,12 +40,18 @@ class DatabaseSeeder extends Seeder
 //        $r->creator_id = 1;
 //        $r->save();
 //
-//        $t = new RecipeType();
-//        $t->name = 'Unhealthy';
-//        $t->save();
-//
-//        $t = new RecipeType();
-//        $t->name = 'Healthy';
-//        $t->save();
+        $t = new RecipeTag();
+        $t->name = 'Unhealthy';
+        $t->save();
+
+        $t = new RecipeTag();
+        $t->name = 'Healthy';
+        $t->save();
+
+        $u = new User();
+        $u->name = 'Spencer Campbell';
+        $u->email = 'f@f';
+        $u->password = '$2y$10$3FjPiDaeYMVW/J008GVBI.rBQN3hx2nn6SMdr.BFsl2qMmm0lwL8G';
+        $u->save();
     }
 }

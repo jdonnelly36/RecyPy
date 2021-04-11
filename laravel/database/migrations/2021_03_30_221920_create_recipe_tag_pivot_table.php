@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class User extends Migration
+class CreateRecipeTagPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class User extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('recipe_tag_pivot', function (Blueprint $table) {
             $table->id();
-            $table->string('username')->nullable();
-            $table->string('name')->nullable();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->bigInteger('recipe_id');
+            $table->bigInteger('tag_id');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class User extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('recipe_tag_pivot');
     }
 }

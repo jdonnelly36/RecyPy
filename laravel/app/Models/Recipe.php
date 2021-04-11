@@ -28,10 +28,14 @@ class Recipe extends Model {
     }
 
     public function author() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     public function comments() {
         return $this->hasMany('App\Models\Comment');
+    }
+
+    public function tags() {
+        return $this->belongsToMany('App\Models\RecipeTag', 'recipe_tag_pivot', 'recipe_id', 'tag_id');
     }
 }
