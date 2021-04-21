@@ -24,6 +24,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', function() {
         return view('welcome');
     });
+    Route::get('/search', function() {
+        return view('search');
+    });
+    Route::get('/recipe_view/{id}', function ($id) {
+        return view('recipe_view', ['recipe' => \App\Models\Recipe::where('id', $id)->with('author', 'ingredients', 'steps', 'tags')->first()]);
+    });
 
     Route::post('/addRecipe', [HomeController::class, 'addRecipe'])->name('addRecipe');
     Route::post('/getRecipe', [HomeController::class, 'getRecipe'])->name('getRecipe');

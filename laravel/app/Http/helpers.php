@@ -10,6 +10,12 @@ if (! function_exists('example')) {
     }
 }
 
+if (! function_exists('get_all_recipes')) {
+    function get_all_recipes() {
+        return \App\Models\Recipe::with('author', 'tags', 'ingredients')->get();
+    }
+}
+
 if (!function_exists('get_recipe_tag_dropdown')) {
     // returns an array which can be easily used in a dropdown
     function get_recipe_tag_dropdown() {
