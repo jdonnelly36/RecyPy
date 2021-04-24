@@ -23,13 +23,13 @@
             <h3 style="margin: 0px;">Ingredients</h3>
             <p id="feed-ingredients">
                 @foreach ($recipe['ingredients'] as $ing)
-                    {{$ing['name'] . ': ' . $ing['quantity'] . ' ' . $ing['unit']}}
+                    {{$ing['name'] . ': ' . $ing['quantity'] . ' ' . $ing['unit']}} <br>
                 @endforeach
             </p>
             <h3 style="margin: 0px;">Steps</h3>
             <p id="feed-steps">
                 @foreach ($recipe['steps'] as $step)
-                    {{$step['step_number'] . ': ' . $step['instructions']}}
+                    {{$step['step_number'] . ': ' . $step['instructions']}} <br>
                 @endforeach
             </p>
             <p>Author: <a href="#" id="feed-author">{{$recipe['author']['name']}}</a> Date: <a id="feed-date">{{$recipe['created_at']}}</a> Rating: <a>3.5/5</a></p>
