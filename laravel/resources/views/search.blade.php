@@ -19,6 +19,10 @@
         border: 3px lightblue solid;
         background-color: lightgray;
     }
+
+    a, a:visited, a:hover, a:active {
+        color: inherit;
+    }
 </style>
 <script>
 
@@ -56,6 +60,7 @@
                         // set search string and then reset all the other ids
                         var cur = $('#search-recipe-' + i)
                         cur.find('#recipe-title').attr('id', 'recipe-title-search-' + i)
+                        cur.find('#link').attr('id', 'link-search-' + i)
                         cur.find('#author-name').attr('id', 'author-name-search-' + i)
                         cur.find('#recipe-description').attr('id', 'recipe-description-search-' + i)
                         cur.find('#ingredients-display').attr('id', 'ingredients-display-search-' + i)
@@ -66,6 +71,7 @@
                         cur.find('#recipe-title-search-' + i).html(data[i]['name'])
                         cur.find('#author-name-search-' + i).html(data[i]['author']['name'])
                         cur.find('#recipe-description-search-' + i).html(data[i]['description'])
+                        cur.find('#link-search-' + i).attr('href', '/recipe_view/' + data[i]['id'])
 
                         // build ingredients as string
                         var ingredients = '';
@@ -164,6 +170,7 @@
 
 {{--Holds the standard format for recipe display card--}}
 <div class="ui raised card" id="recipe-display" style="display: none">
+    <a href="/recipe_view/" id="link">
     <div class="content">
         <div class="header" id="recipe-title"></div>
         <div class="meta" id="author-name"></div>
@@ -190,4 +197,5 @@
         Rating:
         <div class="ui star rating" data-rating="4"></div>
     </div>
+    </a>
 </div>

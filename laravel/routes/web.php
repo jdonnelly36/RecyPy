@@ -34,4 +34,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/addRecipe', [HomeController::class, 'addRecipe'])->name('addRecipe');
     Route::post('/getRecipe', [HomeController::class, 'getRecipe'])->name('getRecipe');
     Route::post('/searchRecipes', [HomeController::class, 'searchRecipes'])->name('searchRecipes');
+    Route::post('/likeRecipe', [HomeController::class, 'likeRecipe'])->name('likeRecipe');
 });

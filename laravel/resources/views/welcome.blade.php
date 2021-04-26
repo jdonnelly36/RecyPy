@@ -26,9 +26,14 @@
         margin-right: 5%;
         width: 90%;
     }
+
+    a, a:visited, a:hover, a:active {
+        color: inherit;
+    }
 </style>
 <script>
     var recipes = <?php echo json_encode(get_all_recipes()); ?>;
+    var liked_recipes = <?php echo json_encode(get_all_liked_recipes()); ?>;
 
     $(document).ready(function () {
         // show the feed
@@ -47,12 +52,19 @@
             cur.find('#feed-description').attr('id', 'feed-description-' + i)
             cur.find('#feed-date').attr('id', 'feed-date-' + i)
             cur.find('#feed-ingredients').attr('id', 'feed-ingredients-' + i)
+            cur.find('#like-counter').attr('id', 'feed-like-counter-' + i)
+            cur.find('#like-button').attr('id', 'feed-like-button-' + i)
+            $('#feed-like-button-' + i).attr('recipe-id', recipes[i]['id'])
 
             cur.find('#feed-title-' + i).html(recipes[i]['name'])
             cur.find('#feed-author-' + i).html(recipes[i]['author']['name'])
             cur.find('#feed-description-' + i).html(recipes[i]['description'])
             cur.find('#feed-date').html(recipes[i]['created_at'])
             cur.find('#feed-link-' + i).attr('href', '/recipe_view/' + recipes[i]['id'])
+            $('#feed-like-counter-' + i).html(recipes[i]['likes'].length)
+
+            if (liked_recipes.includes(recipes[i]['id']))
+                $('#feed-like-button-' + i).addClass('green')
 
             // build ingredients as string
             var ingredients = '';
@@ -64,6 +76,25 @@
             })
             cur.find('#feed-ingredients-' + i).html(ingredients)
         }
+
+        // for all like buttons
+        $('.like').not('.green').on('click', function (e) {
+            // add a like
+            $.ajax({
+                type: 'post',
+                url: '{{route('likeRecipe')}}',
+                data: {id: $(this).attr('recipe-id')},
+                success: function (data) {
+                    console.log('liked recipe')
+                    // disable button
+                    $("div[recipe-id='" + data + "']").addClass('green')
+                    $("div[recipe-id='" + data + "']").off('click')
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            })
+        })
     })
 </script>
 
@@ -114,5 +145,13 @@
 
         </p>
         <p>Author: <a href="#" id="feed-author">username</a> Date: <a id="feed-date">4/8/2021</a> Rating: <a>3.5/5</a></p>
+        <div class="ui labeled button" tabindex="0">
+            <div class="ui button like" id="like-button">
+                <i class="heart icon"></i> Like
+            </div>
+            <a class="ui basic label" id="like-counter">
+                0
+            </a>
+        </div>
     </div>
 </div>

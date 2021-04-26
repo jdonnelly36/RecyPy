@@ -913,6 +913,7 @@ SELECT|sys.sys_config
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>5</DefaultExpression>
     </column>
     <column id="270" parent="236" name="created_at">
       <Position>5</Position>
