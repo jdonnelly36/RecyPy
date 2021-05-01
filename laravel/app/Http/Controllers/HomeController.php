@@ -109,4 +109,12 @@ class HomeController extends Controller
 
         return $recipe;
     }
+
+    public function likeRecipe() {
+        $r = Recipe::find(request('id'));
+        $r->likes()->attach(Auth::id());
+        $r->save();
+
+        return request('id');
+    }
 }

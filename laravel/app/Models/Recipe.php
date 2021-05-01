@@ -38,4 +38,12 @@ class Recipe extends Model {
     public function tags() {
         return $this->belongsToMany('App\Models\RecipeTag', 'recipe_tag_pivot', 'recipe_id', 'tag_id');
     }
+
+    public function getNumLikes($id) {
+        return DB::table('likes')->where('recipe_id', $id)->count();
+    }
+
+    public function likes() {
+        return $this->belongsToMany('App\Models\User', 'likes', 'recipe_id', 'user_id');
+    }
 }

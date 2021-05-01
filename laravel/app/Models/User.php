@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function recipes() {
         return $this->hasMany('App\Models\Recipe');
     }
+
+    public function likedRecipes() {
+        return $this->belongsToMany('App\Models\Recipe', 'likes', 'user_id', 'recipe_id');
+    }
 }

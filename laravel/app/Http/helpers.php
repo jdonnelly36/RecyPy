@@ -12,7 +12,13 @@ if (! function_exists('example')) {
 
 if (! function_exists('get_all_recipes')) {
     function get_all_recipes() {
-        return \App\Models\Recipe::with('author', 'tags', 'ingredients')->get();
+        return \App\Models\Recipe::with('author', 'tags', 'ingredients', 'likes')->get();
+    }
+}
+
+if (! function_exists('get_all_liked_recipes')) {
+    function get_all_liked_recipes() {
+        return DB::table('likes')->where('user_id', Auth::id())->pluck('recipe_id')->toArray();
     }
 }
 
